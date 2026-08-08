@@ -1,0 +1,2 @@
+--flash_mode dout --flash_freq 80m --flash_size 16MB
+0x10000 lvgl_v9_5_0_porting.bin

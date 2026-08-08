@@ -1,0 +1,12 @@
+{
+  "idf.currentSetup": "E:\\esp\\v5.5.5\\esp-idf",
+  "idf.portWin": "COM3",
+  "clangd.path": "E:\\Espressif\\tools\\esp-clang\\esp-19.1.2_20250312\\esp-clang\\bin\\clangd.exe",
+  "clangd.arguments": [
+    "--background-index",
+    "--query-driver=**",
+    "--compile-commands-dir=e:\\Projects\\desk-buddy-esp32\\build"
+  ],
+  "idf.customExtraVars": {},
+  "idf.flashType": "UART"
+}

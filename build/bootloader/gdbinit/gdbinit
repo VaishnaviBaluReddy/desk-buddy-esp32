@@ -1,0 +1,2 @@
+source E:/Projects/desk-buddy-esp32/build/bootloader/gdbinit/symbols
+source E:/Projects/desk-buddy-esp32/build/bootloader/gdbinit/connect
