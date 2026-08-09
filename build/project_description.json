@@ -1,7 +1,7 @@
 {
     "version":            "1.2",
     "project_name":       "lvgl_v9_5_0_porting",
-    "project_version":    "1",
+    "project_version":    "11c214d-dirty",
     "project_path":       "E:/Projects/desk-buddy-esp32",
     "idf_path":           "E:/esp/v5.5.5/esp-idf",
     "build_dir":          "E:/Projects/desk-buddy-esp32/build",
@@ -1450,7 +1450,7 @@
             "managed_reqs": [ "lvgl__lvgl" ],
             "managed_priv_reqs": [ "espressif__esp_lcd_touch_gt911", "espressif__esp_lvgl_adapter" ],
             "file": "E:/Projects/desk-buddy-esp32/build/esp-idf/main/libmain.a",
-            "sources": [ "E:/Projects/desk-buddy-esp32/main/main.cpp", "E:/Projects/desk-buddy-esp32/main/app/app.cpp", "E:/Projects/desk-buddy-esp32/main/Assets/sprite_0.c", "E:/Projects/desk-buddy-esp32/main/Assets/sprite_1.c", "E:/Projects/desk-buddy-esp32/main/Assets/sprite_2.c", "E:/Projects/desk-buddy-esp32/main/Assets/sprite_3.c" ],
+            "sources": [ "E:/Projects/desk-buddy-esp32/main/main.cpp", "E:/Projects/desk-buddy-esp32/main/app/app.cpp", "E:/Projects/desk-buddy-esp32/main/Assets/sleep/sprite_0.c", "E:/Projects/desk-buddy-esp32/main/Assets/sleep/sprite_1.c", "E:/Projects/desk-buddy-esp32/main/Assets/sleep/sprite_2.c", "E:/Projects/desk-buddy-esp32/main/Assets/sleep/sprite_3.c", "E:/Projects/desk-buddy-esp32/main/Assets/sit/sitting_0.c", "E:/Projects/desk-buddy-esp32/main/Assets/sit/sitting_1.c", "E:/Projects/desk-buddy-esp32/main/Assets/sit/sitting_2.c", "E:/Projects/desk-buddy-esp32/main/Assets/sit/sitting_3.c", "E:/Projects/desk-buddy-esp32/main/Assets/sit/sitting_4.c", "E:/Projects/desk-buddy-esp32/main/Assets/sit/sitting_5.c", "E:/Projects/desk-buddy-esp32/main/Assets/stretch/stretching00.c", "E:/Projects/desk-buddy-esp32/main/Assets/stretch/stretching01.c", "E:/Projects/desk-buddy-esp32/main/Assets/stretch/stretching02.c", "E:/Projects/desk-buddy-esp32/main/Assets/stretch/stretching03.c", "E:/Projects/desk-buddy-esp32/main/Assets/stretch/stretching04.c", "E:/Projects/desk-buddy-esp32/main/Assets/stretch/stretching05.c", "E:/Projects/desk-buddy-esp32/main/Assets/stretch/stretching06.c", "E:/Projects/desk-buddy-esp32/main/Assets/stretch/stretching07.c", "E:/Projects/desk-buddy-esp32/main/Assets/stretch/stretching08.c", "E:/Projects/desk-buddy-esp32/main/Assets/stretch/stretching09.c" ],
             "include_dirs": [ ".", "app", "Assets" ]
         },
         "mbedtls": {
