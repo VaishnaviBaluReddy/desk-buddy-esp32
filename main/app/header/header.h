@@ -1,18 +1,18 @@
-#ifndef TASK_SCREEN_H
-#define TASK_SCREEN_H
+#ifndef HEADER_H
+#define HEADER_H
 
 #include "lvgl.h"
 
 // ==================================================
-// SHOW TASK SCREEN
+// HEADER
 // ==================================================
 
-void task_screen_show();
+void header_create(lv_obj_t *parent);
 
 // ==================================================
-// CLEANUP TASK SCREEN
+// HEADER CLEANUP
 // ==================================================
 
-void task_screen_cleanup();
+void header_cleanup();
 
 #endif

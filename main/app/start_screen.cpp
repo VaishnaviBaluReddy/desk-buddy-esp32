@@ -1,6 +1,7 @@
 #include "start_screen.h"
 
 #include "lvgl.h"
+#include "app.h"
 
 // ==================================================
 // ANIMATION SPEEDS
@@ -63,14 +64,7 @@ static CatState cat_state = CAT_SLEEPING;
 // ==================================================
 
 static lv_obj_t *cat = nullptr;
-
 static lv_obj_t *start_button = nullptr;
-
-// ==================================================
-// START BUTTON CALLBACK
-// ==================================================
-
-static StartButtonCallback start_callback = nullptr;
 
 // ==================================================
 // ANIMATION FRAMES
@@ -124,49 +118,35 @@ static uint8_t tap_count = 0;
 
 static uint32_t first_tap_time = 0;
 
+// 1.5 seconds between taps
 static const uint32_t DOUBLE_TAP_TIME = 1500;
 
 // ==================================================
 // FORWARD DECLARATIONS
 // ==================================================
 
-static void animate_cat(
-    lv_timer_t *timer
-);
+static void animate_cat(lv_timer_t *timer);
 
-static void cat_touched(
-    lv_event_t *e
-);
+static void cat_touched(lv_event_t *e);
 
 static void create_start_button();
 
-static void start_button_clicked(
-    lv_event_t *e
-);
-
+static void start_button_clicked(lv_event_t *e);
 
 // ==================================================
 // START BUTTON CLICK
 // ==================================================
 
-static void start_button_clicked(
-    lv_event_t *e
-)
+static void start_button_clicked(lv_event_t *e)
 {
     (void)e;
 
     // --------------------------------------------------
-    // Do NOT navigate directly here.
-    //
-    // Tell app.cpp that START was pressed.
+    // Tell app.cpp to navigate.
     // --------------------------------------------------
 
-    if (start_callback != nullptr)
-    {
-        start_callback();
-    }
+    app_show_task_screen();
 }
-
 
 // ==================================================
 // CREATE START BUTTON
@@ -174,23 +154,19 @@ static void start_button_clicked(
 
 static void create_start_button()
 {
-    // --------------------------------------------------
     // Don't create it twice.
-    // --------------------------------------------------
-
     if (start_button != nullptr)
     {
         return;
     }
 
-    // ==================================================
-    // BUTTON
-    // ==================================================
+    // --------------------------------------------------
+    // Button
+    // --------------------------------------------------
 
-    start_button =
-        lv_button_create(
-            lv_screen_active()
-        );
+    start_button = lv_button_create(
+        lv_screen_active()
+    );
 
     lv_obj_set_size(
         start_button,
@@ -205,9 +181,9 @@ static void create_start_button()
         170
     );
 
-    // ==================================================
-    // BLACK PIXEL-STYLE BUTTON
-    // ==================================================
+    // --------------------------------------------------
+    // Black pixel-style button
+    // --------------------------------------------------
 
     lv_obj_set_style_bg_color(
         start_button,
@@ -221,14 +197,12 @@ static void create_start_button()
         0
     );
 
-    // ==================================================
-    // TEXT
-    // ==================================================
+    // --------------------------------------------------
+    // Text
+    // --------------------------------------------------
 
     lv_obj_t *label =
-        lv_label_create(
-            start_button
-        );
+        lv_label_create(start_button);
 
     lv_label_set_text(
         label,
@@ -243,9 +217,9 @@ static void create_start_button()
 
     lv_obj_center(label);
 
-    // ==================================================
-    // CLICK
-    // ==================================================
+    // --------------------------------------------------
+    // Click
+    // --------------------------------------------------
 
     lv_obj_add_event_cb(
         start_button,
@@ -255,14 +229,11 @@ static void create_start_button()
     );
 }
 
-
 // ==================================================
 // CAT ANIMATION
 // ==================================================
 
-static void animate_cat(
-    lv_timer_t *timer
-)
+static void animate_cat(lv_timer_t *timer)
 {
     (void)timer;
 
@@ -297,9 +268,7 @@ static void animate_cat(
 
         if (current_frame >= 10)
         {
-            // --------------------------------------------------
             // Stretching finished.
-            // --------------------------------------------------
 
             cat_state = CAT_SITTING;
 
@@ -310,18 +279,12 @@ static void animate_cat(
                 sitting_frames[0]
             );
 
-            // --------------------------------------------------
-            // Switch to sitting animation speed.
-            // --------------------------------------------------
-
             lv_timer_set_period(
                 animation_timer,
                 SIT_SPEED
             );
 
-            // --------------------------------------------------
             // START appears only when sitting.
-            // --------------------------------------------------
 
             create_start_button();
 
@@ -356,14 +319,11 @@ static void animate_cat(
     }
 }
 
-
 // ==================================================
 // CAT TOUCH
 // ==================================================
 
-static void cat_touched(
-    lv_event_t *e
-)
+static void cat_touched(lv_event_t *e)
 {
     (void)e;
 
@@ -393,7 +353,7 @@ static void cat_touched(
     }
 
     // ==================================================
-    // IGNORE TOUCH DURING STRETCH
+    // IGNORE DURING STRETCH
     // ==================================================
 
     if (cat_state == CAT_STRETCHING)
@@ -407,8 +367,7 @@ static void cat_touched(
 
     if (cat_state == CAT_SITTING)
     {
-        uint32_t now =
-            lv_tick_get();
+        uint32_t now = lv_tick_get();
 
         // --------------------------------------------------
         // First tap
@@ -434,9 +393,7 @@ static void cat_touched(
 
             if (elapsed <= DOUBLE_TAP_TIME)
             {
-                // --------------------------------------------------
                 // DOUBLE TAP DETECTED
-                // --------------------------------------------------
 
                 tap_count = 0;
 
@@ -454,15 +411,11 @@ static void cat_touched(
                     SLEEP_SPEED
                 );
 
-                // --------------------------------------------------
                 // Remove START button.
-                // --------------------------------------------------
 
                 if (start_button != nullptr)
                 {
-                    lv_obj_delete(
-                        start_button
-                    );
+                    lv_obj_delete(start_button);
 
                     start_button = nullptr;
                 }
@@ -470,11 +423,8 @@ static void cat_touched(
                 return;
             }
 
-            // --------------------------------------------------
             // Too slow.
-            //
-            // This tap becomes a new first tap.
-            // --------------------------------------------------
+            // Treat this as a new first tap.
 
             tap_count = 1;
 
@@ -483,16 +433,15 @@ static void cat_touched(
     }
 }
 
-
 // ==================================================
-// SHOW START SCREEN
+// START SCREEN
 // ==================================================
 
 void start_screen_show()
 {
-    // ==================================================
-    // BACKGROUND
-    // ==================================================
+    // --------------------------------------------------
+    // Background
+    // --------------------------------------------------
 
     lv_obj_set_style_bg_color(
         lv_screen_active(),
@@ -531,10 +480,9 @@ void start_screen_show()
     // CREATE CAT
     // ==================================================
 
-    cat =
-        lv_image_create(
-            lv_screen_active()
-        );
+    cat = lv_image_create(
+        lv_screen_active()
+    );
 
     lv_image_set_src(
         cat,
@@ -551,6 +499,8 @@ void start_screen_show()
     // ==================================================
     // CAT TOUCH AREA
     // ==================================================
+
+    // The image itself is clickable.
 
     lv_obj_add_flag(
         cat,
@@ -576,73 +526,27 @@ void start_screen_show()
         );
 }
 
-
 // ==================================================
-// SET START BUTTON CALLBACK
-// ==================================================
-
-void start_screen_set_start_callback(
-    StartButtonCallback callback
-)
-{
-    start_callback = callback;
-}
-
-
-// ==================================================
-// CLEANUP START SCREEN
+// CLEANUP
 // ==================================================
 
 void start_screen_cleanup()
 {
-    // ==================================================
-    // STOP ANIMATION TIMER
-    // ==================================================
+    // --------------------------------------------------
+    // Delete animation timer
+    // --------------------------------------------------
 
     if (animation_timer != nullptr)
     {
-        lv_timer_delete(
-            animation_timer
-        );
+        lv_timer_delete(animation_timer);
 
         animation_timer = nullptr;
     }
 
-    // ==================================================
-    // DELETE START BUTTON
-    // ==================================================
+    // --------------------------------------------------
+    // Delete start screen objects
+    // --------------------------------------------------
 
-    if (start_button != nullptr)
-    {
-        lv_obj_delete(
-            start_button
-        );
-
-        start_button = nullptr;
-    }
-
-    // ==================================================
-    // DELETE CAT
-    // ==================================================
-
-    if (cat != nullptr)
-    {
-        lv_obj_delete(
-            cat
-        );
-
-        cat = nullptr;
-    }
-
-    // ==================================================
-    // RESET STATE
-    // ==================================================
-
-    cat_state = CAT_SLEEPING;
-
-    current_frame = 0;
-
-    tap_count = 0;
-
-    first_tap_time = 0;
+    cat = nullptr;
+    start_button = nullptr;
 }
