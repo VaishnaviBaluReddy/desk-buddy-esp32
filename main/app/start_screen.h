@@ -4,26 +4,29 @@
 // ==================================================
 // SHOW START SCREEN
 // ==================================================
-//
-// Creates:
-//
-// - sleeping cat
-// - animation timer
-// - cat touch area
-//
-// State transitions:
-//
-// sleeping
-//     ↓ tap
-// stretching
-//     ↓ automatically
-// sitting
-//     ↓ double tap
-// sleeping
-//
-// START button appears while sitting.
-//
 
 void start_screen_show();
+
+// ==================================================
+// CLEANUP START SCREEN
+// ==================================================
+//
+// Called before moving to another screen.
+//
+// Stops the animation timer and removes all
+// start-screen objects.
+//
+
+void start_screen_cleanup();
+
+// ==================================================
+// START BUTTON CALLBACK
+// ==================================================
+
+typedef void (*StartButtonCallback)();
+
+void start_screen_set_start_callback(
+    StartButtonCallback callback
+);
 
 #endif

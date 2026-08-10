@@ -3,12 +3,13 @@
 #include <string.h>
 
 // ==================================================
-// TASK STORAGE
+// STORAGE
 // ==================================================
 
 static Task tasks[MAX_TASKS];
 
 static int task_count = 0;
+
 
 // ==================================================
 // INITIALIZE
@@ -25,6 +26,7 @@ void task_manager_init()
     );
 }
 
+
 // ==================================================
 // GET TASK COUNT
 // ==================================================
@@ -34,19 +36,26 @@ int task_manager_get_count()
     return task_count;
 }
 
+
 // ==================================================
 // GET TASK
 // ==================================================
 
-const Task *task_manager_get_task(int index)
+const Task *task_manager_get_task(
+    int index
+)
 {
-    if (index < 0 || index >= task_count)
+    if (
+        index < 0 ||
+        index >= task_count
+    )
     {
         return nullptr;
     }
 
     return &tasks[index];
 }
+
 
 // ==================================================
 // ADD TASK
@@ -70,28 +79,20 @@ void task_manager_add_task(
         sizeof(tasks[task_count].title) - 1
     );
 
-    tasks[task_count].title[
-        sizeof(tasks[task_count].title) - 1
-    ] = '\0';
+    tasks[task_count]
+        .title[
+            sizeof(tasks[task_count].title) - 1
+        ] = '\0';
 
     tasks[task_count].completed = false;
 
     task_count++;
 }
 
+
 // ==================================================
-// COMPLETE / TOGGLE TASK
+// COMPLETE TASK
 // ==================================================
-//
-// For now this toggles the checkbox state.
-//
-// So:
-//
-// false -> true
-// true  -> false
-//
-// This will be useful when we build the task UI.
-//
 
 void task_manager_complete_task(
     int index
@@ -105,9 +106,29 @@ void task_manager_complete_task(
         return;
     }
 
-    tasks[index].completed =
-        !tasks[index].completed;
+    tasks[index].completed = true;
 }
+
+
+// ==================================================
+// UNCOMPLETE TASK
+// ==================================================
+
+void task_manager_uncomplete_task(
+    int index
+)
+{
+    if (
+        index < 0 ||
+        index >= task_count
+    )
+    {
+        return;
+    }
+
+    tasks[index].completed = false;
+}
+
 
 // ==================================================
 // CLEAR ALL TASKS

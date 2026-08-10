@@ -3,35 +3,73 @@
 
 #include <stdbool.h>
 
-#define MAX_TASKS 10
+// ==================================================
+// CONFIGURATION
+// ==================================================
+
+#define MAX_TASKS 20
 #define TASK_TITLE_LENGTH 64
+
+// ==================================================
+// TASK STRUCTURE
+// ==================================================
 
 typedef struct
 {
     char title[TASK_TITLE_LENGTH];
+
     bool completed;
 
 } Task;
 
-// Initialize task manager.
+// ==================================================
+// INITIALIZE
+// ==================================================
+
 void task_manager_init();
 
-// Return number of tasks.
+// ==================================================
+// GET TASK COUNT
+// ==================================================
+
 int task_manager_get_count();
 
-// Get task by index.
-const Task *task_manager_get_task(int index);
+// ==================================================
+// GET TASK
+// ==================================================
 
-// Add a task.
-void task_manager_add_task(const char *title);
+const Task *task_manager_get_task(
+    int index
+);
 
-// Mark task as completed.
-void task_manager_complete_task(int index);
+// ==================================================
+// ADD TASK
+// ==================================================
 
-// Toggle task completion.
-void task_manager_toggle_task(int index);
+void task_manager_add_task(
+    const char *title
+);
 
-// Clear all tasks.
+// ==================================================
+// COMPLETE TASK
+// ==================================================
+
+void task_manager_complete_task(
+    int index
+);
+
+// ==================================================
+// UNCOMPLETE TASK
+// ==================================================
+
+void task_manager_uncomplete_task(
+    int index
+);
+
+// ==================================================
+// CLEAR ALL TASKS
+// ==================================================
+
 void task_manager_clear_tasks();
 
 #endif

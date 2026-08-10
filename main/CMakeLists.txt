@@ -5,6 +5,8 @@ idf_component_register(
         "app/app.cpp"
         "app/start_screen.cpp"
         "app/task_manager.cpp"
+        "app/task_screen.cpp"
+        "app/cat/cat_animation.cpp"
         "network/wifi.cpp"
 
         "Assets/sleep/sprite_0.c"
