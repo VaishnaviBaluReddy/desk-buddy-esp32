@@ -3,6 +3,8 @@
 #include "esp_log.h"
 #include "esp_lv_adapter.h"
 #include "waveshare_rgb_lcd_port.h"
+#include "network/wifi.h"
+#include "app/task_manager.h"
 
 #include "app/app.h"
 

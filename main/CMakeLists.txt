@@ -1,9 +1,12 @@
 idf_component_register(
     SRCS
         "main.cpp"
+
         "app/app.cpp"
+        "app/start_screen.cpp"
         "app/task_manager.cpp"
         "network/wifi.cpp"
+
         "Assets/sleep/sprite_0.c"
         "Assets/sleep/sprite_1.c"
         "Assets/sleep/sprite_2.c"

@@ -2,10 +2,13 @@
 
 #include <string.h>
 
+// ==================================================
+// TASK STORAGE
+// ==================================================
+
 static Task tasks[MAX_TASKS];
 
 static int task_count = 0;
-
 
 // ==================================================
 // INITIALIZE
@@ -15,9 +18,12 @@ void task_manager_init()
 {
     task_count = 0;
 
-    memset(tasks, 0, sizeof(tasks));
+    memset(
+        tasks,
+        0,
+        sizeof(tasks)
+    );
 }
-
 
 // ==================================================
 // GET TASK COUNT
@@ -28,12 +34,11 @@ int task_manager_get_count()
     return task_count;
 }
 
-
 // ==================================================
 // GET TASK
 // ==================================================
 
-const Task* task_manager_get_task(int index)
+const Task *task_manager_get_task(int index)
 {
     if (index < 0 || index >= task_count)
     {
@@ -43,14 +48,18 @@ const Task* task_manager_get_task(int index)
     return &tasks[index];
 }
 
-
 // ==================================================
 // ADD TASK
 // ==================================================
 
-void task_manager_add_task(const char* title)
+void task_manager_add_task(
+    const char *title
+)
 {
-    if (task_count >= MAX_TASKS)
+    if (
+        task_count >= MAX_TASKS ||
+        title == nullptr
+    )
     {
         return;
     }
@@ -70,21 +79,35 @@ void task_manager_add_task(const char* title)
     task_count++;
 }
 
-
 // ==================================================
-// COMPLETE TASK
+// COMPLETE / TOGGLE TASK
 // ==================================================
+//
+// For now this toggles the checkbox state.
+//
+// So:
+//
+// false -> true
+// true  -> false
+//
+// This will be useful when we build the task UI.
+//
 
-void task_manager_complete_task(int index)
+void task_manager_complete_task(
+    int index
+)
 {
-    if (index < 0 || index >= task_count)
+    if (
+        index < 0 ||
+        index >= task_count
+    )
     {
         return;
     }
 
-    tasks[index].completed = true;
+    tasks[index].completed =
+        !tasks[index].completed;
 }
-
 
 // ==================================================
 // CLEAR ALL TASKS
@@ -94,5 +117,9 @@ void task_manager_clear_tasks()
 {
     task_count = 0;
 
-    memset(tasks, 0, sizeof(tasks));
+    memset(
+        tasks,
+        0,
+        sizeof(tasks)
+    );
 }
