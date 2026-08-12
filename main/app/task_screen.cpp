@@ -10,20 +10,14 @@
 // TASK CHECKBOX CALLBACK
 // ==================================================
 
-static void task_checkbox_clicked(lv_event_t *e)
+static void task_checkbox_clicked(
+    lv_event_t *e
+)
 {
-    // ==================================================
-    // GET CHECKBOX
-    // ==================================================
-
     lv_obj_t *checkbox =
         static_cast<lv_obj_t *>(
             lv_event_get_target(e)
         );
-
-    // ==================================================
-    // GET TASK INDEX
-    // ==================================================
 
     int index =
         static_cast<int>(
@@ -31,10 +25,6 @@ static void task_checkbox_clicked(lv_event_t *e)
                 lv_event_get_user_data(e)
             )
         );
-
-    // ==================================================
-    // CHECK CURRENT STATE
-    // ==================================================
 
     bool checked =
         lv_obj_has_state(
@@ -56,42 +46,36 @@ static void task_checkbox_clicked(lv_event_t *e)
     }
 
     // ==================================================
-    // COMPLETED TASK STYLE
+    // STRIKETHROUGH
     // ==================================================
 
     if (checked)
     {
-        // Lighter text
-
-        lv_obj_set_style_text_color(
-            checkbox,
-            lv_color_hex(0x888888),
-            0
-        );
-
-        // Strikethrough
-
         lv_obj_set_style_text_decor(
             checkbox,
             LV_TEXT_DECOR_STRIKETHROUGH,
             0
         );
+
+        // Make completed text lighter.
+        lv_obj_set_style_text_color(
+            checkbox,
+            lv_color_hex(0x888888),
+            0
+        );
     }
     else
     {
-        // Normal text
-
-        lv_obj_set_style_text_color(
-            checkbox,
-            lv_color_black(),
-            0
-        );
-
-        // Remove strikethrough
-
         lv_obj_set_style_text_decor(
             checkbox,
             LV_TEXT_DECOR_NONE,
+            0
+        );
+
+        // Restore normal text.
+        lv_obj_set_style_text_color(
+            checkbox,
+            lv_color_black(),
             0
         );
     }
@@ -103,10 +87,6 @@ static void task_checkbox_clicked(lv_event_t *e)
 
 void task_screen_show()
 {
-    // ==================================================
-    // GET CURRENT SCREEN
-    // ==================================================
-
     lv_obj_t *screen =
         lv_screen_active();
 
@@ -133,56 +113,16 @@ void task_screen_show()
     header_create(screen);
 
     // ==================================================
-    // TITLE
-    // ==================================================
-
-    lv_obj_t *title =
-        lv_label_create(screen);
-
-    lv_label_set_text(
-        title,
-        "TASKS"
-    );
-
-    lv_obj_set_style_text_color(
-        title,
-        lv_color_black(),
-        0
-    );
-
-    lv_obj_set_style_text_font(
-        title,
-        LV_FONT_DEFAULT,
-        0
-    );
-
-    // Header occupies roughly the first 60 px.
-    // No separator line.
-
-    lv_obj_align(
-        title,
-        LV_ALIGN_TOP_LEFT,
-        30,
-        75
-    );
-
-    // ==================================================
     // TASK LIST
     // ==================================================
 
     int task_count =
         task_manager_get_count();
 
-    // Start below header.
-
-    int y_position = 115;
+    int y_position = 95;
 
     for (int i = 0; i < task_count; i++)
     {
-        // ==================================================
-        // GET TASK
-        // ==================================================
-
         const Task *task =
             task_manager_get_task(i);
 
@@ -210,10 +150,6 @@ void task_screen_show()
             y_position
         );
 
-        // --------------------------------------------------
-        // Row background
-        // --------------------------------------------------
-
         lv_obj_set_style_bg_color(
             row,
             lv_color_white(),
@@ -225,10 +161,6 @@ void task_screen_show()
             LV_OPA_COVER,
             0
         );
-
-        // --------------------------------------------------
-        // Row border
-        // --------------------------------------------------
 
         lv_obj_set_style_border_color(
             row,
@@ -242,19 +174,11 @@ void task_screen_show()
             0
         );
 
-        // --------------------------------------------------
-        // Row corners
-        // --------------------------------------------------
-
         lv_obj_set_style_radius(
             row,
             0,
             0
         );
-
-        // --------------------------------------------------
-        // Remove internal padding
-        // --------------------------------------------------
 
         lv_obj_set_style_pad_all(
             row,
@@ -274,9 +198,13 @@ void task_screen_show()
             task->title
         );
 
-        // --------------------------------------------------
-        // Checkbox position
-        // --------------------------------------------------
+        lv_obj_set_style_text_color(
+            checkbox,
+            task->completed
+                ? lv_color_hex(0x888888)
+                : lv_color_black(),
+            0
+        );
 
         lv_obj_align(
             checkbox,
@@ -286,7 +214,7 @@ void task_screen_show()
         );
 
         // ==================================================
-        // TASK STYLE
+        // EXISTING COMPLETED STATE
         // ==================================================
 
         if (task->completed)
@@ -296,29 +224,9 @@ void task_screen_show()
                 LV_STATE_CHECKED
             );
 
-            lv_obj_set_style_text_color(
-                checkbox,
-                lv_color_hex(0x888888),
-                0
-            );
-
             lv_obj_set_style_text_decor(
                 checkbox,
                 LV_TEXT_DECOR_STRIKETHROUGH,
-                0
-            );
-        }
-        else
-        {
-            lv_obj_set_style_text_color(
-                checkbox,
-                lv_color_black(),
-                0
-            );
-
-            lv_obj_set_style_text_decor(
-                checkbox,
-                LV_TEXT_DECOR_NONE,
                 0
             );
         }
@@ -336,15 +244,11 @@ void task_screen_show()
             )
         );
 
-        // ==================================================
-        // NEXT TASK
-        // ==================================================
-
         y_position += 60;
     }
 
     // ==================================================
-    // TASK-SCREEN CAT
+    // TASK SCREEN CAT
     // ==================================================
 
     lv_obj_t *cat =
@@ -358,22 +262,4 @@ void task_screen_show()
         -10,
         -10
     );
-}
-
-// ==================================================
-// CLEANUP
-// ==================================================
-
-void task_screen_cleanup()
-{
-    // --------------------------------------------------
-    // Nothing special yet.
-    //
-    // The task screen currently consists of children
-    // of the active screen.
-    //
-    // When we move to the next screen, the active
-    // screen will be recreated/cleared by the
-    // navigation layer.
-    // --------------------------------------------------
 }

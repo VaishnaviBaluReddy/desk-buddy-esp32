@@ -4,35 +4,32 @@
 #include "lvgl.h"
 
 // ==================================================
-// CREATE TASK-SCREEN CAT
-// ==================================================
-//
-// Creates a sitting animated cat on the given parent.
-//
-// scale:
-//     265 for the current task-screen cat
-//
-// The returned object is the LVGL image object.
-//
+// CREATE CAT
 // ==================================================
 
 lv_obj_t *cat_animation_create(
     lv_obj_t *parent,
-    int32_t scale
+    int scale
 );
 
 // ==================================================
 // POSITION CAT
 // ==================================================
-//
-// Convenience function for changing the cat position.
-//
-// ==================================================
 
 void cat_animation_set_bottom_right(
     lv_obj_t *cat,
-    int32_t x_offset,
-    int32_t y_offset
+    int x_offset,
+    int y_offset
 );
+
+// ==================================================
+// DESTROY CAT ANIMATION
+// ==================================================
+//
+// Stops its animation timer before the object is
+// removed from the screen.
+//
+
+void cat_animation_destroy();
 
 #endif

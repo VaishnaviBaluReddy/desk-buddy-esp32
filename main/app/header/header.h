@@ -3,16 +3,7 @@
 
 #include "lvgl.h"
 
-// ==================================================
-// HEADER
-// ==================================================
-
+// Create the header on the supplied screen.
 void header_create(lv_obj_t *parent);
-
-// ==================================================
-// HEADER CLEANUP
-// ==================================================
-
-void header_cleanup();
 
 #endif

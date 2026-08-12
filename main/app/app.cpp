@@ -5,6 +5,7 @@
 #include "start_screen.h"
 #include "task_screen.h"
 #include "task_manager.h"
+#include "network/wifi/wifi.h"
 
 // ==================================================
 // START APPLICATION
@@ -39,6 +40,12 @@ void app_start()
     );
 
     // ==================================================
+    // START WIFI
+    // ==================================================
+
+    wifi_init();
+
+    // ==================================================
     // SHOW START SCREEN
     // ==================================================
 
@@ -51,6 +58,25 @@ void app_start()
 
 void app_show_start_screen()
 {
+    // --------------------------------------------------
+    // Stop anything belonging to the previous
+    // start screen before deleting its LVGL objects.
+    // --------------------------------------------------
+
+    start_screen_cleanup();
+
+    // --------------------------------------------------
+    // Remove all objects from the current screen.
+    // --------------------------------------------------
+
+    lv_obj_clean(
+        lv_screen_active()
+    );
+
+    // --------------------------------------------------
+    // Create the start screen again.
+    // --------------------------------------------------
+
     start_screen_show();
 }
 
@@ -60,5 +86,30 @@ void app_show_start_screen()
 
 void app_show_task_screen()
 {
+    // --------------------------------------------------
+    // IMPORTANT:
+    //
+    // The start screen owns an animation timer.
+    // lv_obj_clean() deletes the cat object, but it
+    // does NOT automatically delete our custom timer.
+    //
+    // Therefore cleanup MUST happen BEFORE cleaning
+    // the screen.
+    // --------------------------------------------------
+
+    start_screen_cleanup();
+
+    // --------------------------------------------------
+    // Remove the complete start screen.
+    // --------------------------------------------------
+
+    lv_obj_clean(
+        lv_screen_active()
+    );
+
+    // --------------------------------------------------
+    // Create task screen.
+    // --------------------------------------------------
+
     task_screen_show();
 }

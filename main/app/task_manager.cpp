@@ -10,7 +10,6 @@ static Task tasks[MAX_TASKS];
 
 static int task_count = 0;
 
-
 // ==================================================
 // INITIALIZE
 // ==================================================
@@ -26,7 +25,6 @@ void task_manager_init()
     );
 }
 
-
 // ==================================================
 // GET TASK COUNT
 // ==================================================
@@ -35,7 +33,6 @@ int task_manager_get_count()
 {
     return task_count;
 }
-
 
 // ==================================================
 // GET TASK
@@ -56,7 +53,6 @@ const Task *task_manager_get_task(
     return &tasks[index];
 }
 
-
 // ==================================================
 // ADD TASK
 // ==================================================
@@ -76,19 +72,23 @@ void task_manager_add_task(
     strncpy(
         tasks[task_count].title,
         title,
-        sizeof(tasks[task_count].title) - 1
+        sizeof(
+            tasks[task_count].title
+        ) - 1
     );
 
     tasks[task_count]
         .title[
-            sizeof(tasks[task_count].title) - 1
+            sizeof(
+                tasks[task_count].title
+            ) - 1
         ] = '\0';
 
-    tasks[task_count].completed = false;
+    tasks[task_count].completed =
+        false;
 
     task_count++;
 }
-
 
 // ==================================================
 // COMPLETE TASK
@@ -109,7 +109,6 @@ void task_manager_complete_task(
     tasks[index].completed = true;
 }
 
-
 // ==================================================
 // UNCOMPLETE TASK
 // ==================================================
@@ -128,7 +127,6 @@ void task_manager_uncomplete_task(
 
     tasks[index].completed = false;
 }
-
 
 // ==================================================
 // CLEAR ALL TASKS

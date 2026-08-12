@@ -1,26 +1,15 @@
 #ifndef TASK_MANAGER_H
 #define TASK_MANAGER_H
 
-#include <stdbool.h>
-
-// ==================================================
-// CONFIGURATION
-// ==================================================
-
-#define MAX_TASKS 20
+#define MAX_TASKS 10
 #define TASK_TITLE_LENGTH 64
 
-// ==================================================
-// TASK STRUCTURE
-// ==================================================
-
-typedef struct
+struct Task
 {
     char title[TASK_TITLE_LENGTH];
 
     bool completed;
-
-} Task;
+};
 
 // ==================================================
 // INITIALIZE
@@ -29,21 +18,17 @@ typedef struct
 void task_manager_init();
 
 // ==================================================
-// GET TASK COUNT
+// GET
 // ==================================================
 
 int task_manager_get_count();
-
-// ==================================================
-// GET TASK
-// ==================================================
 
 const Task *task_manager_get_task(
     int index
 );
 
 // ==================================================
-// ADD TASK
+// ADD
 // ==================================================
 
 void task_manager_add_task(
@@ -51,23 +36,19 @@ void task_manager_add_task(
 );
 
 // ==================================================
-// COMPLETE TASK
+// COMPLETE / UNCOMPLETE
 // ==================================================
 
 void task_manager_complete_task(
     int index
 );
 
-// ==================================================
-// UNCOMPLETE TASK
-// ==================================================
-
 void task_manager_uncomplete_task(
     int index
 );
 
 // ==================================================
-// CLEAR ALL TASKS
+// CLEAR
 // ==================================================
 
 void task_manager_clear_tasks();

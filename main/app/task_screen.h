@@ -1,8 +1,6 @@
 #ifndef TASK_SCREEN_H
 #define TASK_SCREEN_H
 
-#include "lvgl.h"
-
 // ==================================================
 // SHOW TASK SCREEN
 // ==================================================
